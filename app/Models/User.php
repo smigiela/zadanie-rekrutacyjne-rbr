@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Geo::class, Address::class);
     }
+
+    public function company()
+    {
+        return $this->hasOne(Company::class);
+    }
 }

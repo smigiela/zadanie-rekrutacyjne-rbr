@@ -12,12 +12,13 @@ class Geo extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'geo_lat',
-        'geo_lng'
+        'lat',
+        'lng',
+        'address_id'
     ];
 
     public function address()
     {
-        return $this->hasOne(Address::class);
+        return $this->belongsTo(Address::class);
     }
 }
