@@ -4,17 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        //
+        $posts = Http::get('https://jsonplaceholder.typicode.com/posts')->collect();
+
+        foreach($posts as $post){
+            Post::updateOrCreate(
+                ['id' => $post['id']],
+                [
+                    'title' => $post['title'],
+                    'body' => $post['body'],
+                    'user_id' => $post['userId']
+                ]
+            );
+        }
+
+        return view('posts.index', compact('posts'));
     }
 
     /**
