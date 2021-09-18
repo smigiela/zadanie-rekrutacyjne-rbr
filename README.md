@@ -1,64 +1,49 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Zadanie Grupa RBR <img src="https://www.gruparbr.pl/wp-content/uploads/2020/11/cropped-logo_gruparbr_logo.png" alt="grupa rbr" width="120">
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Proszę napisać aplikację webową w języku **PHP** (z użyciem frameworka Laravel) za pomocą cyklicznego skryptu (raz dziennie),
+który będzie pobierać dane z API (linki są podane poniżej) użytkowników oraz ich postów i końcowo aktualizować je w bazie danych **MySQL**.
 
-## About Laravel
+API do użycia w zadaniu rekrutacyjnym:
+- Users: https://jsonplaceholder.typicode.com/users
+- Posts: https://jsonplaceholder.typicode.com/posts
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Listę treści postów wraz z przypisanym do niego autorem wyświetl w widoku w postaci tabeli.
+Dodatkowo proszę przedstawić na wykresie najbardziej aktywnych użytkowników z ostatnich 7 dni.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Rozwiązane zadanie proszę wrzucić na zdalne repozytorium **git** i podać do niego link.
+Rozwiązanie proszę odesłać na następujący adres e-mail rekrutacja@gruparbr.pl
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Prosze wykonać zadanie w ciągu 4 dni od momentu dostarczenia wiadomości.
 
-## Learning Laravel
+W razie pytań, proszę się zgłaszać do nas poprzez adres email:
+[rekrutacja@gruparbr.pl](mailto:rekrutacja@gruparbr.pl).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+----
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Rozwiązanie by Daniel Śmigiela
 
-## Laravel Sponsors
+Aplikacja zgodnie z wymaganiami pobiera raz dziennie (o północy) listę użytkowników oraz listę postów ze wskazanych endpointów a następnie sprawdza czy w bazie danych są zapisane te rekordy - 
+sprawdzanie odbywa się na podstawie ID obiektu w pobranym JSONie - jeśli obiekt istnieje lokalnie to zostanie zaktualizowany, jeśli nie, to zostanie utworzony.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Chciałem odwzorować strukturę danych z JSON'a dlatego użytkownik jest w relacji z adresem, firmą i postami, adres w relacji ze współrzędnymi.
 
-### Premium Partners
+Dla pobrania danych z API i zapisywania w bazie danych utworzyłem osobną warstwę - **service** - aby odseparować logikę od kontrolerów.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+Rozszerzyłem delikatnie zakres widoków - poza listą postów wyświetlam również listę użytkowników (gdzie m.in. znajduje się wymagany wykres aktywności użytkowników) oraz widok szczegółów jednego użytkownika, gdzie na widok wyciągam relacje (adres, firma).
 
-## Contributing
+Aby odpalić projekt lokalnie należy:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Klonujemy repo ```git clone https://github.com/smigiela/zadanie-rekrutacyjne-rbr.git```
+2. Przechodzimy do katalogu z aplikacją```cd zadanie-rekrutacyjne-rbr```
+3. Instalujemy zależności```composer install```
+4. Dodajemy joby do kolejki ```php artisan schedule:run```
+5. Uruchamiamy kolejkę ```php artisan queue:work```
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Doinstalowane paczki:
 
-## Security Vulnerabilities
+- "laraveldaily/laravel-charts": "^0.1.25"
+- "doctrine/dbal": "^3.1",
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Na froncie użyłem Bootstrap 4 (ładowany z CDN razem z jQuery i popper.js), natomiast paczka laravel-charts używa chart.js pod spodem.
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
