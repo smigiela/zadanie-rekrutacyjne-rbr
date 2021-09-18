@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="card-body">
-            <p>{{__('Email: ')}} {{ $user->email }}</p>
+            <p>{{__('Email: ')}} <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
             <p>{{__('Phone: ')}} {{ $user->phone ?? '' }}</p>
             <p>{{__('Website: ')}} <a href="{{ $user->website ?? '' }}">{{ $user->website }}</a></p>
             <hr>
