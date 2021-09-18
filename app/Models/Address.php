@@ -19,6 +19,11 @@ class Address extends Model
         'user_id'
     ];
 
+    public function getFullAddressAttribute(): string
+    {
+        return $this->city . ' ' . $this->zipcode . ',' . $this->street . ' ' . $this->suite;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
