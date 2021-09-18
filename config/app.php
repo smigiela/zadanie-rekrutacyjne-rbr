@@ -56,6 +56,17 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | API URL
+    |--------------------------------------------------------------------------
+    | Url zewnętrznego API do pobierania zasobów
+    |
+    */
+
+    'json_api_url' => env('API_URL', 'https://jsonplaceholder.typicode.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
