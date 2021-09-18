@@ -19,6 +19,8 @@
             <p>{{__('Suite: ')}} {{ $user->address->suite }}</p>
             <p>{{__('City: ')}} {{ $user->address->city }}</p>
             <p>{{__('Zipcode: ')}} {{ $user->address->zipcode }}</p>
+            <p>{{__('Latitude: ')}} {{ $user->address->geo->lat }}</p>
+            <p>{{__('Longitude: ')}} {{ $user->address->geo->lng }}</p>
             <hr>
             <h2>{{__('Company')}}</h2>
             <p>{{__('Name: ')}} {{ $user->company->name }}</p>

@@ -43,7 +43,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user->load('address', 'company')->loadCount('posts');
+        $user->load('address', 'address.geo', 'company')->loadCount('posts');
 
         return view('users.show', compact('user'));
     }
